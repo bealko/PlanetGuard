@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "raymath.h": "c",
+        "typeinfo": "c",
+        "environment.h": "c"
+    }
+}

@@ -1,0 +1,8 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 600
+#define SCREEN_CENTER CLITERAL(Vector2){SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2}
+
+#endif
