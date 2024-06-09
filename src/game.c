@@ -33,6 +33,7 @@ void UpdateGame(void)
     DrawEnvironment();
     EnvironmentSetPlayerInfo(GetPlayer());
     UpdateGameCamera();
+
 	UpdatePlayer();
     DrawPlayer();
 

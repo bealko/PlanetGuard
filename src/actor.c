@@ -5,21 +5,34 @@
 
 #define TRAIL 0
 
+Vector2 _input = {0};
+
+Vector2 _trail[32];
+
 
 static void UpdateAngle(Actor* actor, float frametime)
 {
-	int xIn = (int)IsKeyDown(KEY_RIGHT) - (int)IsKeyDown(KEY_LEFT);
-	actor->rotation += (xIn * 100 * frametime);
+	actor->rotation += (_input.x * 100 * frametime);
 }
+
+void ActorReadInput()
+{
+    _input.x = (int)IsKeyDown(KEY_RIGHT) - (int)IsKeyDown(KEY_LEFT);
+    _input.y = (int)IsKeyDown(KEY_UP) - (int)IsKeyDown(KEY_DOWN);
+}
+
+
 
 void UpdateVelocity(Actor* actor, float frametime){
 
-    int yIn = (int)IsKeyDown(KEY_UP);
     float magSqr = Vector2LengthSqr(actor->velocity);
 	float mag = sqrt(magSqr);
     Vector2 facingDirection = ActorFacingDirection(*actor);
+    
+    actor->thrust = _input.y;
 
-    if (yIn > 0) {  
+    if (_input.y > 0) {  
+        
         actor->velocity = Vector2Add(actor->velocity,
 			Vector2Scale(facingDirection, 1.5 * frametime));
     }else{
@@ -34,6 +47,8 @@ Vector2 ActorFacingDirection(Actor actor)
 {
 	return Vector2Rotate((Vector2){0, -1}, actor.rotation * DEG2RAD);
 }
+
+
 void ActorDraw(Actor actor, Texture2D texture)
 {
 	const Rectangle source = {0, 0, 16, 16};
@@ -51,10 +66,19 @@ void ActorMove(Actor* actor)
 {
 	float frametime = GetFrameTime();
     char* description = "actor: %d";
-    DrawText(TextFormat("actor: %s",actor->name), actor->position.x - 60, actor->position.y - 80, 16, WHITE);
-    DrawText(TextFormat("pos: %.0f,%.0f",actor->position.x, actor->position.y), actor->position.x - 60, actor->position.y - 60, 16, WHITE);
-    DrawPixel(actor->position.x - origin.x,actor->position.y - origin.y,WHITE);
-    DrawText(TextFormat("vel: %.0f,%.0f",actor->velocity.x, actor->velocity.y), actor->position.x - 60, actor->position.y - 40, 16, WHITE);
+    //DrawText(TextFormat("actor: %s",actor->name), actor->position.x - 60, actor->position.y - 100, 16, WHITE);
+    //DrawText(TextFormat("pos: %.0f,%.0f",actor->position.x, actor->position.y), actor->position.x - 60, actor->position.y - 80, 16, WHITE);
+
+
+
+    DrawRing(actor->position,58.0f,60.0f,0.f,360.f,0.f,BLUE);
+
+
+
+
+    //DrawText(TextFormat("vel: %.0f,%.0f",actor->velocity.x, actor->velocity.y), actor->position.x - 60, actor->position.y - 60, 16, WHITE);
+    //DrawText(TextFormat("input: %.0f,%.0f",_input.x, _input.y), actor->position.x - 60, actor->position.y - 40, 16, WHITE);
+    
     UpdateAngle(actor, frametime);
     UpdateVelocity(actor,frametime);
 	actor->position = Vector2Add(actor->position, Vector2Scale(actor->velocity, frametime));

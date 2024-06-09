@@ -15,6 +15,7 @@ typedef struct Actor
     Vector2 position;
     Vector2 velocity;
     ActorState state;
+    float thrust;
     float rotation;
 
 } Actor;
@@ -24,6 +25,7 @@ typedef struct Actor
 
 Vector2 ActorFacingDirection(Actor player);
 void ActorDraw(Actor actor, Texture2D texture );
+void ActorReadInput(void);
 void ActorUpdate(Actor* actor);
 void ActorMove(Actor* actor);
 void ActorAddVelocity(Vector2 velocity);
