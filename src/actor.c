@@ -62,22 +62,21 @@ void ActorDraw(Actor actor, Texture2D texture)
 
 static Vector2 origin = {0,0};
 
+#define X_OFFSET 250
+
 void ActorMove(Actor* actor)
 {
 	float frametime = GetFrameTime();
     char* description = "actor: %d";
-    //DrawText(TextFormat("actor: %s",actor->name), actor->position.x - 60, actor->position.y - 100, 16, WHITE);
-    //DrawText(TextFormat("pos: %.0f,%.0f",actor->position.x, actor->position.y), actor->position.x - 60, actor->position.y - 80, 16, WHITE);
+    DrawText(TextFormat("actor: %s",actor->name), actor->position.x - X_OFFSET, actor->position.y - 100, 16, WHITE);
+    DrawText(TextFormat("pos: %.0f,%.0f",actor->position.x, actor->position.y), actor->position.x - X_OFFSET, actor->position.y - 80, 16, WHITE);
 
 
 
-    DrawRing(actor->position,58.0f,60.0f,0.f,360.f,0.f,BLUE);
+    DrawRing(actor->position,58.0f,60.0f,0.f,360.f,0.f,Fade(BLUE,0.4f));
 
-
-
-
-    //DrawText(TextFormat("vel: %.0f,%.0f",actor->velocity.x, actor->velocity.y), actor->position.x - 60, actor->position.y - 60, 16, WHITE);
-    //DrawText(TextFormat("input: %.0f,%.0f",_input.x, _input.y), actor->position.x - 60, actor->position.y - 40, 16, WHITE);
+    DrawText(TextFormat("vel: %.0f,%.0f",actor->velocity.x, actor->velocity.y), actor->position.x - X_OFFSET, actor->position.y - 60, 16, WHITE);
+    DrawText(TextFormat("input: %.0f,%.0f",_input.x, _input.y), actor->position.x - X_OFFSET, actor->position.y - 40, 16, WHITE);
     
     UpdateAngle(actor, frametime);
     UpdateVelocity(actor,frametime);

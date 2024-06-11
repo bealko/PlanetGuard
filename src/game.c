@@ -19,8 +19,11 @@ void InitGame(void)
     _camera.offset = (Vector2){ SCREEN_WIDTH/2.0f, SCREEN_HEIGHT/2.0f };
     _camera.rotation = 0.0f;
     _camera.zoom = 1.0f;
+    InitAudioDevice();
 	InitPlayer();
     InitEnvironment();
+
+
 }
 void UpdateGameCamera(void){
     _camera.target = GetPlayer()->position;
@@ -58,4 +61,10 @@ void DrawGame(void)
 		break;
 	}
 
+}
+
+void UnloadGame()
+{
+    UnloadPlayer();
+    CloseAudioDevice();
 }

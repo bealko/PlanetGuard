@@ -16,7 +16,7 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Planet Guard");
 
     SetTargetFPS(60); // Set our game to run at 60 frames-per-second
-
+    SetTraceLogLevel(LOG_ERROR);
     InitGame();
     SetWindowIcon(wicon);
     UnloadImage(wicon);
@@ -34,7 +34,7 @@ int main(void)
 
         EndDrawing();
     }
-
+    UnloadGame();
     // De-Initialization
     CloseWindow(); // Close window and OpenGL context
 

@@ -4,19 +4,21 @@
 
 
 
-static Actor _player;
-static Texture2D _texturePlayerTexture;
-static Texture2D _thrusterFireTexture;
+Actor _player;
+Texture2D _texturePlayerTexture;
+Texture2D _thrusterFireTexture;
 
 
-
+Sound _thursterFireSound;
 
 
 void InitPlayer(void)
 {
 	ResetPlayer();
 	_texturePlayerTexture = LoadTexture("../res/ship.png");
-	_thrusterFireTexture = LoadTexture("../res/thruster_fire.png");
+	_thrusterFireTexture  = LoadTexture("../res/thruster_fire.png");
+	_thursterFireSound    = LoadSound("../res/sounds/thruster_loop.wav");
+
 }
 void ResetPlayer(void)
 {
@@ -34,19 +36,43 @@ Actor* GetPlayer(){
 }
 
 
+void PlaySounds(){
+ if (GetPlayer()->thrust > 0) {
+        // If the sound is not already playing, play it
+        if (!IsSoundPlaying(_thursterFireSound)) {
+            // Set the sound to loop
+            PlaySound(_thursterFireSound);
+        }
+    } else {
+        // If the player is not thrusting, stop the sound
+        StopSound(_thursterFireSound);
+    }
+}
+
+
 void DrawPlayer(void)
 {
-	if (GetPlayer()->thrust > 0)
-	DrawThrusterFire();
+	if (GetPlayer()->thrust > 0){
+		DrawThrusterFire();
+	}
+	
 	ActorDraw(_player, _texturePlayerTexture);
 	
 }
 
 void UpdatePlayer(void){
+
 	ActorReadInput();
+	PlaySounds();
     ActorMove(&_player);
 
 }
+
+void UnloadPlayer(void)
+{
+	UnloadSound(_thursterFireSound);
+}
+
 void DrawThrusterFire() {
     int frames_count = 4; // Assuming 4 frames for the thruster fire animation
     static int currentFrame = 0;

@@ -7,6 +7,8 @@ void InitPlayer(void);
 void DrawPlayer(void);
 void UpdatePlayer(void);
 Actor* GetPlayer();
+void UnloadPlayer(void);
 void ResetPlayer(void);
+
 #endif
 
